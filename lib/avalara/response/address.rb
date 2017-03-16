@@ -3,26 +3,19 @@ require "hashie/extensions/symbolize_keys"
 module Avalara
   module Response
     class Address < Avalara::Types::Stash
-      property :result_code, from: :ResultCode
-      property :address, from: :Address
-      property :messages, from: :Messages
+      coerce_key :address, Avalara::Response::AddressLine
+      coerce_key :validated_addresses, Array[Avalara::Response::AddressLine]
+      coerce_key :messages, Array[Avalara::Response::Message]
+
+      property :address
+      property :validated_addresses, :from => :validatedAddresses
+      property :coordinates
+      property :resolution_quality, :from => :resolutionQuality
+      property :tax_authorities, :from => :taxAuthorities
+      property :messages
 
       def initialize(response)
         super(Hashie::Extensions::SymbolizeKeys.symbolize_keys(response))
-      end
-
-      def success?
-        result_code == "Success"
-      end
-
-      def Messages=(msgs)
-        self.messages = msgs.map do |message|
-          Message.new(message)
-        end
-      end
-
-      def Address=(addr)
-        self.address = AddressLine.new(addr)
       end
     end
   end

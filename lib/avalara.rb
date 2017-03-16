@@ -181,6 +181,28 @@ module Avalara
     raise TimeoutError.new(e)
   end
 
+  def self.validate_address_v2(address_hash)
+    uri = [endpoint, 'api', 'v2', 'addresses', 'resolve'].join('/')
+    response = API.post(
+      uri,
+      {
+        :body => address_hash.to_json,
+        :headers => API.headers_for(address_hash.to_json.length),
+        :basic_auth => authentication
+      }.merge!(net_settings)
+    )
+    case response.code
+    when 200..299
+      Response::Address.new(response)
+    when 400..599
+      fail ApiError.new(Response::Address.new(response))
+    else
+      fail ApiError.new(response)
+    end
+  rescue Timeout::Error => e
+    raise TimeoutError.new(e)
+  end
+
   private
 
   def self.net_settings
