@@ -131,6 +131,34 @@ module Avalara
     raise Error.new(e)
   end
 
+  def self.get_tax_v2(transaction)
+    uri = [endpoint, 'api', 'v2', 'transactions', 'create'].join('/')
+
+    response = API.post(
+      uri,
+      {
+        :body => transaction.to_json,
+        :headers => API.headers_for(transaction.to_json.length),
+        :basic_auth => authentication
+      }.merge!(net_settings)
+    )
+
+    case response.code
+    when 200..299
+      Response::Invoice.new(response)
+    when 400..599
+      raise ApiError.new(Response::Invoice.new(response))
+    else
+      raise ApiError.new(response)
+    end
+  rescue Timeout::Error => e
+    raise TimeoutError.new(e)
+  rescue ApiError => e
+    raise e
+  rescue Exception => e
+    raise Error.new(e)
+  end
+
   def self.validate_address(address_hash)
     uri = [endpoint, version, "address", "validate"].join("/")
     response = API.get(

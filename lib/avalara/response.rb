@@ -10,5 +10,6 @@ module Avalara
     autoload :Tax,         'avalara/response/tax'
     autoload :AddressLine, 'avalara/response/address_line'
     autoload :Address,     'avalara/response/address'
+    autoload :Transaction, 'avalara/response/transaction'
   end
 end
