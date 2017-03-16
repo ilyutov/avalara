@@ -3,11 +3,11 @@
 module Avalara
   module Response
     class Message < Avalara::Types::Stash
-      property :summary, :from => :summary
-      property :details, :from => :details
+      property :summary
+      property :details
       property :refers_to, :from => :refersTo
-      property :severity, :from => :severity
-      property :source, :from => :source
+      property :severity
+      property :source
     end
   end
 end

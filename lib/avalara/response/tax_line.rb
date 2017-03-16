@@ -3,13 +3,14 @@
 module Avalara
   module Response
     class TaxLine < Avalara::Types::Stash
+      coerce_key :details, Array[Avalara::Response::TaxDetail]
 
-      property :id, :from => :id
+      property :id
       property :transaction_id, :from => :transactionId
       property :line_number, :from => :lineNumber
       property :boundary_override_id, :from => :boundaryOverrideId
       property :customer_usage_type, :from => :customerUsageType
-      property :description, :from => :description
+      property :description
       property :destination_address_id, :from => :destinationAddressId
       property :origin_address_id, :from => :originAddressId
       property :discount_amount, :from => :discountAmount
@@ -21,13 +22,13 @@ module Avalara
       property :is_s_s_t_p, :from => :isSSTP
       property :item_code, :from => :itemCode
       property :line_amount, :from => :lineAmount
-      property :quantity, :from => :quantity
-      property :ref1, :from => :ref1
-      property :ref2, :from => :ref2
+      property :quantity
+      property :ref1
+      property :ref2
       property :reporting_date, :from => :reportingDate
       property :rev_account, :from => :revAccount
-      property :sourcing, :from => :sourcing
-      property :tax, :from => :tax
+      property :sourcing
+      property :tax
       property :taxable_amount, :from => :taxableAmount
       property :tax_calculated, :from => :taxCalculated
       property :tax_code, :from => :taxCode
@@ -40,12 +41,6 @@ module Avalara
       property :tax_included, :from => :taxIncluded
       property :details, :from => :Details
 
-      def Details=(tax_details)
-        self.details = []
-        tax_details.each do |tax_detail|
-          self.details << TaxDetail.new(tax_detail)
-        end
-      end
     end
   end
 end

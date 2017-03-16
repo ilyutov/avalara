@@ -3,12 +3,12 @@
 module Avalara
   module Response
     class TaxDetail < Avalara::Types::Stash
-      property :id, :from => :id
+      property :id
       property :transaction_line_id, :from => :transactionLineId
       property :transaction_id, :from => :transactionId
       property :address_id, :from => :addressId
-      property :country, :from => :country
-      property :region, :from => :region
+      property :country
+      property :region
       property :county_f_i_p_s, :from => :countyFIPS
       property :state_f_i_p_s, :from => :stateFIPS
       property :exempt_amount, :from => :exemptAmount
@@ -23,12 +23,12 @@ module Avalara
       property :non_taxable_amount, :from => :nonTaxableAmount
       property :non_taxable_rule_id, :from => :nonTaxableRuleId
       property :non_taxable_type, :from => :nonTaxableType
-      property :rate, :from => :rate
+      property :rate
       property :rate_rule_id, :from => :rateRuleId
       property :rate_source_id, :from => :rateSourceId
       property :ser_code, :from => :serCode
-      property :sourcing, :from => :sourcing
-      property :tax, :from => :tax
+      property :sourcing
+      property :tax
       property :taxable_amount, :from => :taxableAmount
       property :tax_type, :from => :taxType
       property :tax_name, :from => :taxName

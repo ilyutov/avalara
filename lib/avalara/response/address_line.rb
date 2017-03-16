@@ -4,12 +4,12 @@ module Avalara
       property :line_1, from: :line1
       property :line_2, from: :line2
       property :line_3, from: :line3
-      property :city, from: :city
-      property :region, from: :region
+      property :city
+      property :region
       property :postal_code, from: :postalCode
-      property :country, from: :country
-      property :latitude, from: :latitude
-      property :longitude, from: :longitude
+      property :country
+      property :latitude
+      property :longitude
     end
   end
 end
