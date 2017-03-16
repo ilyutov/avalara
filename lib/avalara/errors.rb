@@ -5,14 +5,14 @@ module Avalara
   TimeoutError = Class.new(Error)
   NotImplementedError = Class.new(Error)
   class ApiError < Class.new(Error) do
+
+      attr_reader :response
+
       def initialize(response = nil)
-        @message = response
+        @response = response
         super
       end
 
-      def message
-        @message
-      end
     end
   end
 

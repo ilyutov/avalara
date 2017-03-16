@@ -146,8 +146,6 @@ module Avalara
     case response.code
     when 200..299
       Response::Transaction.new(response)
-    when 400..599
-      raise ApiError.new(Response::Transaction.new(response))
     else
       raise ApiError.new(response)
     end
@@ -156,6 +154,8 @@ module Avalara
   rescue ApiError => e
     raise e
   rescue Exception => e
+    raise Error.new(e)
+  rescue Errno::ECONNRESET => e
     raise Error.new(e)
   end
 
@@ -194,13 +194,13 @@ module Avalara
     case response.code
     when 200..299
       Response::Address.new(response)
-    when 400..599
-      fail ApiError.new(Response::Address.new(response))
     else
       fail ApiError.new(response)
     end
   rescue Timeout::Error => e
     raise TimeoutError.new(e)
+  rescue Errno::ECONNRESET => e
+    raise Error.new(e)
   end
 
   private
