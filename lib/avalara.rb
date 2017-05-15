@@ -131,14 +131,17 @@ module Avalara
     raise Error.new(e)
   end
 
-  def self.get_tax_v2(transaction)
+  def self.get_tax_v2(transaction, headers: {})
     uri = [endpoint, 'api', 'v2', 'transactions', 'create'].join('/')
+
+    request_headers = API.headers_for(transaction.to_json.length)
+    request_headers.merge!(headers)
 
     response = API.post(
       uri,
       {
         :body => transaction.to_json,
-        :headers => API.headers_for(transaction.to_json.length),
+        :headers => request_headers,
         :basic_auth => authentication
       }.merge!(net_settings)
     )
@@ -181,13 +184,17 @@ module Avalara
     raise TimeoutError.new(e)
   end
 
-  def self.validate_address_v2(address_hash)
+  def self.validate_address_v2(address_hash, headers: {})
     uri = [endpoint, 'api', 'v2', 'addresses', 'resolve'].join('/')
+
+    request_headers = API.headers_for(address_hash.to_json.length)
+    request_headers.merge!(headers)
+
     response = API.post(
       uri,
       {
         :body => address_hash.to_json,
-        :headers => API.headers_for(address_hash.to_json.length),
+        :headers => request_headers,
         :basic_auth => authentication
       }.merge!(net_settings)
     )
