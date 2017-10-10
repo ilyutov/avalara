@@ -11,5 +11,6 @@ module Avalara
     autoload :AddressLine, 'avalara/response/address_line'
     autoload :Address,     'avalara/response/address'
     autoload :Transaction, 'avalara/response/transaction'
+    autoload :Ping,        'avalara/response/ping'
   end
 end
