@@ -210,6 +210,31 @@ module Avalara
     raise Error.new(e)
   end
 
+  def ping(headers: headers)
+    uri = [endpoint, 'api', 'v2', 'utilities', 'ping'].join('/')
+
+    request_headers = API.headers_for(0)
+    request_headers.merge!(headers)
+
+    response = API.get(
+      uri,
+      {
+        :headers => request_headers,
+        :basic_auth => authentication
+      }.merge!(net_settings)
+    )
+    case response.code
+    when 200..299
+      Response::Ping.new(response)
+    else
+      fail ApiError.new(response)
+    end
+  rescue Timeout::Error => e
+    raise TimeoutError.new(e)
+  rescue Errno::ECONNRESET => e
+    raise Error.new(e)
+  end
+
   private
 
   def self.net_settings
