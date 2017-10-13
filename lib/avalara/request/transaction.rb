@@ -6,6 +6,7 @@ module Avalara
     # Same as GetTaxRequest
     class Transaction < Avalara::Types::Stash
       coerce_key :date, Avalara::Types::Date
+      coerce_key :TaxOverride, TaxOverride
 
       # Set outgoing
 
