@@ -210,7 +210,7 @@ module Avalara
     raise Error.new(e)
   end
 
-  def self.ping(headers: headers)
+  def self.ping(headers: {})
     uri = [endpoint, 'api', 'v2', 'utilities', 'ping'].join('/')
 
     request_headers = API.headers_for(0)
